@@ -1,11 +1,7 @@
-export class Event {
+export interface Event {
 
-  id: number;
-  message: string;
   email: string;
+  message: string;
   time: Date;
-
-  constructor() {
-  }
 
 }
