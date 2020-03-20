@@ -1,23 +1,43 @@
 <form>
   <div class="form-group">
     <label for="emailInput">Email</label>
-    <input type="email" class="form-control" id="emailInput" placeholder="name@example.com"/>
+    <input type="email"
+           class="form-control"
+           id="emailInput"
+           name="email"
+           placeholder="name@example.com"
+           [(ngModel)]="email"/>
   </div>
 
   <div class="form-group">
     <label for="messageInput">Message</label>
-    <textarea class="form-control" id="messageInput" rows="2" placeholder="Type your message example..."></textarea>
+    <textarea class="form-control"
+              id="messageInput"
+              rows="2"
+              name="message"
+              placeholder="Type your message example..."
+              [(ngModel)]="message">
+    </textarea>
   </div>
 
   <div class="form-group">
     <label for="dateTimeInput">Date Time</label>
     <input id="dateTimeInput"
            placeholder="Date Time"
+           name="dateTime"
            [owlDateTimeTrigger]="dateTime"
            [owlDateTime]="dateTime"
            [(ngModel)]="choosedTime"
            [min]="nowTime">
     <owl-date-time #dateTime></owl-date-time>
+  </div>
+  <div class="button-row">
+    <button class="mat-raised-button; button" (click)="save()">
+      Save
+    </button>
+    <button class="mat-raised-button; button" (click)="clear()">
+      Clear
+    </button>
   </div>
 
 </form>
