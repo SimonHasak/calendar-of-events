@@ -1,0 +1,19 @@
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+
+
+@Injectable()
+export class EnterEventsService {
+
+  private eventUrl: 'a';
+
+  constructor(private http: HttpClient) { }
+
+  saveEvent(event: Event): Observable<Event> {
+    return this.http.post<Event>(this.eventUrl, event)
+      .pipe(catchError(this.handleError('addEvent', event)));
+  }
+
+}
