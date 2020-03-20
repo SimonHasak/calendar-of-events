@@ -1,0 +1,40 @@
+.container-main {
+  width: 95%;
+  height: 90%;
+  margin: 30px 30px 30px 30px;
+  border: 5px solid gainsboro;
+  border-radius: 5px;
+  padding: 30px 30px 30px 30px;
+}
+
+.row-line {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.left-element {
+  flex-grow: 1;
+}
+
+.right-element {
+  flex-grow: 1;
+}
+
+.is-time-class {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/*.center {*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*}*/
+
+.flex-column {
+  height: 100%;
+  display: flex;
+}
