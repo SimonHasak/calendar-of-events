@@ -11,6 +11,7 @@ import { EnterEventsComponent } from './enter-events/enter-events.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { IsTimeEventsComponent } from './is-time-events/is-time-events.component';
 import { NotifyServiceComponent } from './notify-service/notify-service.component';
+import {EnterEventsService} from './service/enter-events.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { NotifyServiceComponent } from './notify-service/notify-service.componen
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    EnterEventsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

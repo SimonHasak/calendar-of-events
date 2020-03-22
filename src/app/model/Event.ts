@@ -1,7 +1,11 @@
-export interface Event {
+export class Event {
 
-  email: string;
-  message: string;
-  time: Date;
+  // id?: number;
+  // email: string;
+  // message: string;
+  // time: Date;
+
+  name: string;
+  number: number;
 
 }
