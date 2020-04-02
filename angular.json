@@ -13,8 +13,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "browserTarget": "calendar-of-events:build",
-            "proxyConfig": "src/proxy.conf.json",
             "outputPath": "dist/calendar-of-events",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -32,7 +30,6 @@
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/pooper.js/dist/umd/popper.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
