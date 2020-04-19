@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SchedulledEvent} from '../model/schedulled-event';
 import {SchedulledEventResponse} from '../model/schedulled-event-response';
-import {map} from 'rxjs/operators';
+import {catchError, filter, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -17,13 +17,14 @@ export class IsTimeService {
   }
 
   save(schedulledEvent: SchedulledEvent) {
-    return this.http.post<Notification>(this.isTimeUrl, schedulledEvent);
+    return this.http.post<Notification>(this.isTimeUrl, schedulledEvent).toPromise();
   }
 
   getSchedulledEvents(): Observable<SchedulledEvent[]> {
     return this.http.get<SchedulledEventResponse>(this.isTimeUrl)
       .pipe(
-        map(response => response._embedded.schedulledEventList)////TODO je prazdny cekni
+        filter(r => r.),
+        map(response => response._embedded.schedulledEventList),
       );
   }
 

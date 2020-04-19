@@ -14,7 +14,7 @@ export class NotificationService {
   }
 
   save(notification: Notification) {
-    return this.http.post<Notification>(this.notificationUrl, notification);
+    return this.http.post<Notification>(this.notificationUrl, notification).toPromise();
   }
 
 }

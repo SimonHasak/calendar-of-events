@@ -14,7 +14,7 @@ export class EnterEventsService {
   }
 
   save(event: SavedEvent) {
-    return this.http.post<SavedEvent>(this.eventUrl, event);
+    return this.http.post<SavedEvent>(this.eventUrl, event).toPromise();
   }
 
 }
