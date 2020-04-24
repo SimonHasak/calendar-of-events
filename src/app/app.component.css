@@ -23,16 +23,19 @@
 
 .is-time-class {
   display: flex;
-  height: 100%;
+  flex-direction: row;
   width: 100%;
-  align-items: center;
+  height: 100%;
   justify-content: center;
+  margin-top: 15px;
 }
 
-/*.center {*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
+.center {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
 
 .flex-column {
   height: 100%;

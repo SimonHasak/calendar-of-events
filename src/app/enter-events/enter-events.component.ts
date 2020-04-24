@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
-import { Event } from '../model/Event';
+import { SavedEvent } from '../model/saved-event';
 import {EnterEventsService} from '../service/enter-events.service';
-import {EventModel} from '../model/event-model';
+import {SchedulledEvent} from '../model/schedulled-event';
+import {Notification} from '../model/notification';
+import {IsTimeService} from '../service/is-time.service';
+import {NotificationService} from '../service/notification.service';
 
 @Component({
   selector: 'app-enter-events',
@@ -11,51 +14,98 @@ import {EventModel} from '../model/event-model';
 })
 export class EnterEventsComponent implements OnInit {
 
-  event: EventModel;
+  @Output() eventSchedulledEvent = new EventEmitter<SchedulledEvent>();
 
-  nowTime: Date;
+  savedEvent: SavedEvent;
+  schedulledEvent: SchedulledEvent;
+  notification: Notification;
+
+  currentTime: Date;
   choosedTime: Date;
   email: string;
-  message: string;
+  text: string;
+  messageId: number;
 
-  constructor(private enterEventsService: EnterEventsService) {
-    this.event = new EventModel();
+  constructor(private enterEventsService: EnterEventsService,
+              private isTimeService: IsTimeService,
+              private notificationService: NotificationService) {
+    this.savedEvent = new SavedEvent();
+    this.schedulledEvent = new SchedulledEvent();
+    this.notification = new Notification();
+    this.messageId = 0;
   }
 
   ngOnInit(): void {
-    this.nowTime = new Date();
+    this.currentTime = new Date();
   }
 
-  save() {
+  async save() {
     if (this.isValidInput()) {
-      this.saveDataToEvent();
-      this.sendDataToBackend();
+      this.saveSavedEvent();
+
+      await this.sendSavedEventToBackend();
+
+      this.saveNotification();
+
+      await this.sendNotificationToBackend();
+
+      this.saveSchedulledEvent();
+      this.emitToSchedulledComponent();
+
+      await this.sendSchedulledEventToBackend();
+
       this.clear();
+    } else {
+      alert("Input is not valid!");
     }
-    console.log(this.event);
   }
 
-  saveDataToEvent() {
-    this.event = {
-      name: 'simon',
-      number: 23
-      // id: 1,
-      // email: this.email,
-      // message: this.message,
-      // time: this.choosedTime
+  saveSavedEvent() {
+    console.log('[Enter Events] Saved FE.');
+    this.savedEvent = {
+      text: this.text
     };
   }
 
-  sendDataToBackend() {
-    console.log('Saving');
-    this.enterEventsService.saveEvent(this.event).subscribe(e => console.log('Saved: ', e));
+  saveSchedulledEvent() {
+    console.log('[Is Time] Saved FE.');
+    this.schedulledEvent = {
+      messageId: this.messageId,
+      schedulledTime: this.choosedTime
+    };
+  }
+
+  saveNotification() {
+    console.log('[Notification] Saved FE.');
+    this.notification = {
+      messageId: this.messageId,
+      email: this.email
+    };
+  }
+
+  async sendSavedEventToBackend() {
+    let result = await this.enterEventsService.save(this.savedEvent);
+    this.messageId = result.messageId;
+    console.log('[Enter Event] Saved: ', result);
+  }
+
+  async sendSchedulledEventToBackend() {
+    await this.isTimeService.save(this.schedulledEvent).then(e => console.log('[Is Time] Saved: ', e));
+  }
+
+  async sendNotificationToBackend() {
+    await this.notificationService.save(this.notification).then(e => console.log('[Notification] Saved: ', e));
+  }
+
+  emitToSchedulledComponent() {
+    console.log('emited', this.schedulledEvent);
+    this.eventSchedulledEvent.emit(this.schedulledEvent);
   }
 
   clear() {
     this.choosedTime = null;
     this.email = '';
-    this.message = '';
-    this.enterEventsService.getAll();
+    this.text = '';
   }
 
   private isValidInput(): boolean {
@@ -64,7 +114,7 @@ export class EnterEventsComponent implements OnInit {
     if (this.email == '') {
       errorMessage += 'Email cannot be empty.\n';
     }
-    if (this.message == '') {
+    if (this.text == '') {
       errorMessage += 'Message cannot be empty.\n';
     }
     if (this.choosedTime == null) {

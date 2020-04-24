@@ -2,13 +2,18 @@
   <div class="flex-column">
     <div class="row-line">
       <app-notify-service class="left-element"></app-notify-service>
-      <app-enter-events class="right-element"></app-enter-events>
+      <app-enter-events
+        class="right-element"
+        (eventSchedulledEvent)="childSchedulledEventEmitting($event)">
+      </app-enter-events>
     </div>
     <div class="is-time-class">
-      <app-is-time-events class="center"></app-is-time-events>
+      <app-is-time-events
+        class="center"
+        #childComponent
+        [schedulledEventEmitted]="schedulledEvent"
+        (click)="childComponent.addToList(schedulledEvent)">
+      </app-is-time-events>
     </div>
   </div>
 </div>
-
-
-<!--<router-outlet></router-outlet>-->

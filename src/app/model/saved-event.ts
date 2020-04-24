@@ -1,8 +1,6 @@
-export class Event {
+export class SavedEvent {
 
-  id?: number;
+  messageId?: number;
   text: string;
-  email: string;
-  time: Date;
 
 }

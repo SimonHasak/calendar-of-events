@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {SchedulledEvent} from '../model/schedulled-event';
 import {SchedulledEventResponse} from '../model/schedulled-event-response';
-import {catchError, filter, map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
+import {Observable, of, throwError} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,28 @@ export class IsTimeService {
   }
 
   save(schedulledEvent: SchedulledEvent) {
-    return this.http.post<Notification>(this.isTimeUrl, schedulledEvent).toPromise();
+    return this.http.post<SchedulledEvent>(this.isTimeUrl, schedulledEvent).toPromise();
   }
 
-  getSchedulledEvents(): Observable<SchedulledEvent[]> {
+  // getSchedulledEvents(): Observable<SchedulledEvent[]> {
+  //   return this.http.get<SchedulledEventResponse>(this.isTimeUrl)
+  //     .pipe(
+  //       map(response => response._embedded.schedulledEventList),
+  //       tap(message => message),
+  //       catchError(this.handleError('getSchedulledEvents', []))
+  //     );
+  // }
+
+  getSchedulledEvents (): Observable<SchedulledEvent[]> {
     return this.http.get<SchedulledEventResponse>(this.isTimeUrl)
       .pipe(
-        filter(r => r.),
         map(response => response._embedded.schedulledEventList),
+        catchError(error => { return Observable.throw(error); })
       );
   }
+
+  // private handleError(error: HttpErrorResponse) {
+  //   return Observable.throw(error.message || "Empty array.");
+  // }
 
 }

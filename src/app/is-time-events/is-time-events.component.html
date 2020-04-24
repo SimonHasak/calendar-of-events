@@ -1,17 +1,26 @@
 <table class="table">
+  <thead [ngClass]="schedulledEvents.length > 4 ? 'thead' : ''">
   <tr>
-    <th>Id</th>
-    <th>Date Time</th>
-    <th>State</th>
+    <th [ngClass]="schedulledEvents.length > 4 ? 'th' : ''">Id</th>
+    <th [ngClass]="schedulledEvents.length > 4 ? 'th' : ''">Message Id</th>
+    <th [ngClass]="schedulledEvents.length > 4 ? 'th' : ''">Date Time</th>
+    <th [ngClass]="schedulledEvents.length > 4 ? 'th' : ''">State</th>
+  </tr>
+  </thead>
+  <tbody [ngClass]="5 > 4 ? 'tbody' : ''">
+  <tr *ngFor="let schedulledEvent of schedulledEvents">
+    <td>{{schedulledEvent.schedulledId}}</td>
+    <td>{{schedulledEvent.messageId}}</td>
+    <td>{{schedulledEvent.schedulledTime | dateTimeFormat}}</td>
+    <td>Unresolved</td>
   </tr>
   <tr>
-    <th>1</th>
-    <th>2020-03-15 15:30</th>
-    <th>waiting</th>
+    <td>1</td>
+    <td>2</td>
+    <td>25.18.7</td>
+    <td>UNRESOLVED</td>
   </tr>
-  <tr>
-    <th>2</th>
-    <th>2020-03-16 08:45</th>
-    <th>waiting</th>
-  </tr>
+  </tbody>
+
 </table>
+

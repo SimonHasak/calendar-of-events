@@ -16,7 +16,7 @@
               rows="2"
               name="message"
               placeholder="Type your message example..."
-              [(ngModel)]="message">
+              [(ngModel)]="text">
     </textarea>
   </div>
 
@@ -28,7 +28,7 @@
            [owlDateTimeTrigger]="dateTime"
            [owlDateTime]="dateTime"
            [(ngModel)]="choosedTime"
-           [min]="nowTime">
+           [min]="currentTime">
     <owl-date-time #dateTime></owl-date-time>
   </div>
   <div class="button-row">

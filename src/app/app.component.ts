@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {SchedulledEvent} from './model/schedulled-event';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'calendar-of-events';
+
+  public schedulledEvent: SchedulledEvent;
+
+  childSchedulledEventEmitting(event: SchedulledEvent) {
+    console.log('in parent', event);
+    this.schedulledEvent = event;
+  }
+
+
 }
