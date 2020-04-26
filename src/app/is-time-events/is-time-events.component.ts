@@ -11,7 +11,7 @@ export class IsTimeEventsComponent implements OnInit {
 
   @Input() schedulledEventEmitted: SchedulledEvent;
 
-  schedulledEvents: SchedulledEvent[];
+  schedulledEvents: SchedulledEvent[] = [];
 
   constructor(private isTimeService: IsTimeService) { }
 

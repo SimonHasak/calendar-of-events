@@ -7,18 +7,12 @@
     <th [ngClass]="schedulledEvents.length > 4 ? 'th' : ''">State</th>
   </tr>
   </thead>
-  <tbody [ngClass]="5 > 4 ? 'tbody' : ''">
+  <tbody [ngClass]="schedulledEvents.length > 4 ? 'tbody' : ''">
   <tr *ngFor="let schedulledEvent of schedulledEvents">
     <td>{{schedulledEvent.schedulledId}}</td>
     <td>{{schedulledEvent.messageId}}</td>
     <td>{{schedulledEvent.schedulledTime | dateTimeFormat}}</td>
     <td>Unresolved</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>2</td>
-    <td>25.18.7</td>
-    <td>UNRESOLVED</td>
   </tr>
   </tbody>
 
