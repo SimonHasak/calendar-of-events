@@ -25,6 +25,7 @@ export class EnterEventsComponent implements OnInit {
   email: string;
   text: string;
   messageId: number;
+  schedulledId: number;
 
   constructor(private enterEventsService: EnterEventsService,
               private isTimeService: IsTimeService,
@@ -33,6 +34,7 @@ export class EnterEventsComponent implements OnInit {
     this.schedulledEvent = new SchedulledEvent();
     this.notification = new Notification();
     this.messageId = 0;
+    this.schedulledId = 0;
   }
 
   ngOnInit(): void {
@@ -50,9 +52,10 @@ export class EnterEventsComponent implements OnInit {
       await this.sendNotificationToBackend();
 
       this.saveSchedulledEvent();
-      this.emitToSchedulledComponent();
 
       await this.sendSchedulledEventToBackend();
+
+      this.emitToSchedulledComponent();
 
       this.clear();
     } else {
@@ -70,6 +73,7 @@ export class EnterEventsComponent implements OnInit {
   saveSchedulledEvent() {
     console.log('[Is Time] Saved FE.');
     this.schedulledEvent = {
+      schedulledId: this.schedulledId,
       messageId: this.messageId,
       schedulledTime: this.choosedTime
     };
@@ -90,7 +94,9 @@ export class EnterEventsComponent implements OnInit {
   }
 
   async sendSchedulledEventToBackend() {
-    await this.isTimeService.save(this.schedulledEvent).then(e => console.log('[Is Time] Saved: ', e));
+    let result = await this.isTimeService.save(this.schedulledEvent);
+    this.schedulledEvent.schedulledId = result.schedulledId;
+    console.log('[Is Time] Saved: ', this.schedulledEvent);
   }
 
   async sendNotificationToBackend() {
@@ -98,8 +104,8 @@ export class EnterEventsComponent implements OnInit {
   }
 
   emitToSchedulledComponent() {
-    console.log('emited', this.schedulledEvent);
     this.eventSchedulledEvent.emit(this.schedulledEvent);
+    console.log('emited', this.schedulledEvent);
   }
 
   clear() {
