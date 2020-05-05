@@ -1,7 +1,10 @@
 <div class="container-main">
   <div class="flex-column">
     <div class="row-line">
-      <app-notify-service class="left-element"></app-notify-service>
+      <app-notify-service
+        class="left-element"
+        (eventMessageIdEvent)="childMessageIdEventEmitting($event)">
+      </app-notify-service>
       <app-enter-events
         class="right-element"
         (eventSchedulledEvent)="childSchedulledEventEmitting($event)">
@@ -12,7 +15,8 @@
         class="center"
         #childComponent
         [schedulledEventEmitted]="schedulledEvent"
-        (click)="childComponent.addToList(schedulledEvent)">
+        (click)="childComponent.addToList(schedulledEvent)"
+        [messageIdEmitted]="messageId">
       </app-is-time-events>
     </div>
   </div>

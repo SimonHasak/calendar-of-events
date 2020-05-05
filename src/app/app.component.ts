@@ -9,10 +9,16 @@ import {SchedulledEvent} from './model/schedulled-event';
 export class AppComponent {
 
   public schedulledEvent: SchedulledEvent;
+  public messageId: number;
 
   childSchedulledEventEmitting(event: SchedulledEvent) {
     console.log('in parent', event);
     this.schedulledEvent = event;
+  }
+
+  childMessageIdEventEmitting(event: number) {
+    console.log('in parent', event);
+    this.messageId = event;
   }
 
 

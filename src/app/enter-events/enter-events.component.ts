@@ -75,7 +75,7 @@ export class EnterEventsComponent implements OnInit {
     this.schedulledEvent = {
       schedulledId: this.schedulledId,
       messageId: this.messageId,
-      schedulledTime: this.choosedTime
+      schedulledTime: this.choosedTime,
     };
   }
 

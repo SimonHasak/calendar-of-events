@@ -1,6 +1,7 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, SimpleChanges} from '@angular/core';
 import {NotificationService} from '../service/notification.service';
 import {Notification} from '../model/notification';
+import {SchedulledEvent} from '../model/schedulled-event';
 
 @Component({
   selector: 'app-notify-service',
@@ -8,6 +9,8 @@ import {Notification} from '../model/notification';
   styleUrls: ['./notify-service.component.css']
 })
 export class NotifyServiceComponent implements OnInit {
+
+  @Output() eventMessageIdEvent = new EventEmitter<number>();
 
   text: string = '';
 
@@ -19,17 +22,14 @@ export class NotifyServiceComponent implements OnInit {
     this.notificationService.getNewNotification().subscribe(event => {
       this.notification = JSON.parse(event.data);
       console.log('Received ', this.notification);
-      this.text += 'Sending email to ' + this.notification.email + '\n';
+      this.text = 'Sending email to ' + this.notification.email;
+      this.emitToSchedulledComponent();
     });
-    // let source = new EventSource('http://localhost:8081/notification/new_notification');
-    // source.addEventListener('message', message =>  {
-    //   this.text = JSON.parse(message.data);
-    //   console.log(this.text);
-    // });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('Change in notification component');
+  emitToSchedulledComponent() {
+    this.eventMessageIdEvent.emit(this.notification.messageId);
+    console.log('emited', this.notification.messageId);
   }
 
 }

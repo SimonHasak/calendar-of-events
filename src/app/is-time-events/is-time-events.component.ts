@@ -10,6 +10,7 @@ import {IsTimeService} from '../service/is-time.service';
 export class IsTimeEventsComponent implements OnInit {
 
   @Input() schedulledEventEmitted: SchedulledEvent;
+  @Input() messageIdEmitted: number;
 
   schedulledEvents: SchedulledEvent[] = [];
 
@@ -23,16 +24,36 @@ export class IsTimeEventsComponent implements OnInit {
   }
 
   addToList(event: SchedulledEvent) {
-    console.log('pushed ', event);
-    this.schedulledEvents.push(event);
+    if (this.schedulledEvents.indexOf(event) === -1) {
+      // console.log('pushed into ', event);
+      this.schedulledEvents.push(event);
+    }
+    // console.log('not pushed');
+  }
+
+  removeFromListByMessageId(messageId: number) {
+    var indexToRemove = -1;
+    for (var element of this.schedulledEvents) {
+      ++indexToRemove;
+      if (element.messageId === messageId) {
+        break;
+      }
+    }
+    if (indexToRemove < this.schedulledEvents.length) {
+      this.schedulledEvents.splice(indexToRemove, 1);
+    }
+    console.log(messageId);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     console.log('on change', changes);
-    if (!changes.schedulledEventEmitted.isFirstChange()) {
+    if (!(changes['schedulledEventEmitted'] === undefined || changes['schedulledEventEmitted'].isFirstChange())) {
       this.addToList(this.schedulledEventEmitted);
     }
 
+    if (!(changes['messageIdEmitted'] === undefined || changes['messageIdEmitted'].isFirstChange())) {
+      this.removeFromListByMessageId(this.messageIdEmitted);
+    }
   }
 
 }
