@@ -14,11 +14,13 @@
 }
 
 .left-element {
-  flex-grow: 1;
+  /*flex-grow: 1;*/
+  width: 45%;
 }
 
 .right-element {
-  flex-grow: 1;
+  /*flex-grow: 1;*/
+  width: 55%;
 }
 
 .is-time-class {
