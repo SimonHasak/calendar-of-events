@@ -1,0 +1,24 @@
+
+div {
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  margin-top: 5px;
+  color: black;
+  font-size: 130%;
+  font-family: Arial, Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+img {
+  width: 128px;
+  height: 128px;
+}

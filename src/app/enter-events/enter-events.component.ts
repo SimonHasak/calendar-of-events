@@ -116,9 +116,10 @@ export class EnterEventsComponent implements OnInit {
 
   private isValidInput(): boolean {
     let errorMessage = '';
+    let regex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
-    if (this.email == '') {
-      errorMessage += 'Email cannot be empty.\n';
+    if (this.email == '' || !regex.test(this.email)) {
+      errorMessage += 'Email cannot be empty or in invalid format.\n';
     }
     if (this.text == '') {
       errorMessage += 'Message cannot be empty.\n';

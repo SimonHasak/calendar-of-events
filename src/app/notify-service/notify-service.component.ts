@@ -13,9 +13,7 @@ export class NotifyServiceComponent implements OnInit {
 
   text: string = '';
 
-  isTextShowable: boolean = true;
-
-  notifications: Notification[] = [];
+  isTextShowable: boolean = false;
 
   notification: Notification;
 
@@ -24,13 +22,11 @@ export class NotifyServiceComponent implements OnInit {
   ngOnInit(): void {
     this.notificationService.getNewNotification().subscribe(event => {
       this.notification = JSON.parse(event.data);
-      // this.notifications.push(this.notification);
       this.isTextShowable = true;
       console.log('Received ', this.notification);
 
       this.text = 'Sending message to ' + this.notification.email;
 
-      // this.notifications.push(this.notification);
 
       setTimeout(() => {
           this.isTextShowable = false;
